@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function useGetMovies() {
+export default function useGetShows(show) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ export default function useGetMovies() {
       console.log("Fetching movies...");
       try {
         const response = await axios.get(
-          "https://api.themoviedb.org/3/discover/movie",
+          `https://api.themoviedb.org/3/discover/${show}`,
           {
             params: {
               api_key: "a1db14cbe9b1aeaa9a050b489c9c533f",
