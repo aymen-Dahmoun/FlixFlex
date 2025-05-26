@@ -1,27 +1,35 @@
 import { StyleSheet, View } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { Card, IconButton, Text } from "react-native-paper";
 
-export default function MovieCard({ movie }) {
-    return(
-        <View >
-            <Card style={styles.Card}
-            mode="contained"
-            >
+export default function MovieCard({ show }) {
+    // Create an array for stars based on vote_average
+    const stars = Array.from({ length: Math.round(show.vote_average / 2) });
+
+    return (
+        <View>
+            <Card style={styles.Card} mode='contained'>
                 <Card.Cover
-                    source={{ uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}` }} 
+                    source={{ uri: `https://image.tmdb.org/t/p/w500/${show.poster_path}` }}
                     style={styles.Cover}
                 />
-                <Card.Title 
-                    title={movie.title} 
-                    subtitle={movie.release_date}
-                    textNumberOfLines={1}
+                <Card.Title
+                    title={show.title}
+                    subtitle={show.release_date}
+                    titleNumberOfLines={1}
                     subtitleNumberOfLines={1}
-                    overflow="hidden"
                     titleStyle={styles.title}
-                 />
-                <Card.Content>
-                    <Text>rate: 5</Text>
-                </Card.Content>
+                />
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10, marginBottom: 10 }}>
+                    {stars.map((_, i) => (
+                        <IconButton
+                            key={i}
+                            icon="star"
+                            size={15}
+                            iconColor="#FFD700"
+                            style={{ padding: 0, margin: 0, width: 15, height: 15 }}
+                        />
+                    ))}
+                </View>
             </Card>
         </View>
     )
@@ -30,27 +38,23 @@ export default function MovieCard({ movie }) {
 const styles = StyleSheet.create({
     Card: {
         margin: 5,
+        borderWidth: 0.5,
+        borderRadius: 6,
+        borderColor: '#ccc',
         width: 160,
-        height: 300,
         alignItems: 'center',
         backgroundColor: '#fff',
         overflow: "hidden",
     },
     title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-    },
-    subtitle: {
         fontSize: 16,
-        color: '#666',
+        fontWeight: 'bold',
     },
     Cover: {
-        width: 140,      // Fixed width for image
-        height: 210,     // Fixed height for image
+        width: 160,
+        height: 210,
         alignSelf: 'center',
         overflow: 'hidden',
+        borderRadius: 6,
     },
 })

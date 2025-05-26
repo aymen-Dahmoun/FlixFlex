@@ -1,19 +1,19 @@
 import { StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 
-export default function WideCard({ movie }) {
+export default function WideCard({ show }) {
     return(
         <View style={{ flex: 1, width: '100%' }}>
             <Card style={styles.Card}>
                 <View style={styles.row}>
                     <Card.Cover
-                        source={{ uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}` }} 
+                        source={{ uri: `https://image.tmdb.org/t/p/w500/${show.poster_path}` }} 
                         style={styles.Cover}
                     />
                     <View style={styles.info}>
                         <Card.Title
-                            title={movie.title}
-                            subtitle={movie.release_date}
+                            title={show.title}
+                            subtitle={show.release_date}
                             titleNumberOfLines={1}
                             subtitleNumberOfLines={1}
                             titleStyle={styles.title}

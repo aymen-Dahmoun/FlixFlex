@@ -5,7 +5,7 @@ import ShowCard from '../comps/ShowCard';
 import WideCard from '../comps/WideCard';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Card, Divider } from 'react-native-paper';
-import useGetShows from '../hooks/useGetShows';
+import useGetShows from '../hooks/useFetch';
 
 export default function SeriesListScreen() {
   const {movies, loading, error} = useGetShows('tv');

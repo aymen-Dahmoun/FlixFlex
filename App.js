@@ -7,7 +7,7 @@ import SeriesListScreen from './screens/SeriesListScreen';
 export default function App() {
   return (
     <SafeAreaProvider style={styles.container}>
-      <SeriesListScreen />
+      <MoviesListScreen />
     </SafeAreaProvider>
   );
 }
