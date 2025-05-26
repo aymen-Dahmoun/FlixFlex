@@ -32,18 +32,17 @@ export default function MoviesListScreen() {
     
   useEffect(() => {
     if (movies?.length > 0) {
-      setMoviesList(prev => [...prev, ...movies.filter(
-        (movie, index, self) => index === self.findIndex((m) => m.id === movie.id))]);
+      setMoviesList(prev => {
+      const fullData = [...prev, ...movies];
+      const filteredData = Array.from(new Map(fullData.map(m => [m.id, m])).values());
+      return filteredData;
+    });
     }
   }, [movies]);
 
   return (
     <SafeAreaProvider
         style={{
-            paddingTop: insets.top,
-            paddingBottom: insets.bottom,
-            paddingLeft: insets.left,
-            paddingRight: insets.right,
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
@@ -61,10 +60,8 @@ export default function MoviesListScreen() {
           <TouchableOpacity style={{ height: 100 }} onPress={()=>setPage(prev => prev + 1)} >
             <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>More</Text>
           </TouchableOpacity>
-        
         </ScrollView>
       </View>
-      
     </SafeAreaProvider>
   );
 

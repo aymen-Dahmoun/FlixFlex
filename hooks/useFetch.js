@@ -38,7 +38,7 @@ export default function useFetch(path, params) {
     };
 
     fetchData();
-  }, []);
+  }, [path, JSON.stringify(params)]);
 
   const result = { data, loading, error };
 

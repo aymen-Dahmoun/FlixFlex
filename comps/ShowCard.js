@@ -1,12 +1,11 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Card, IconButton, Text } from "react-native-paper";
 
 export default function MovieCard({ show }) {
-    // Create an array for stars based on vote_average
     const stars = Array.from({ length: Math.round(show.vote_average / 2) });
 
     return (
-        <View>
+        <TouchableOpacity>
             <Card style={styles.Card} mode='contained'>
                 <Card.Cover
                     source={{ uri: `https://image.tmdb.org/t/p/w500/${show.poster_path}` }}
@@ -31,7 +30,7 @@ export default function MovieCard({ show }) {
                     ))}
                 </View>
             </Card>
-        </View>
+        </TouchableOpacity>
     )
 }
 

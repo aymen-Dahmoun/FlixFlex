@@ -1,84 +1,71 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, FlatList, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import ShowCard from '../comps/ShowCard';
 import WideCard from '../comps/WideCard';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Card, Divider } from 'react-native-paper';
-import useGetShows from '../hooks/useFetch';
+import useFetch from '../hooks/useFetch';
+import ShowsList from '../comps/ShowsList';
 
 export default function SeriesListScreen() {
-  const {movies, loading, error} = useGetShows('tv');
-  const insets = useSafeAreaInsets();
+
+  const [moviesList, setMoviesList] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const {data: movies, loading: loadingMovies, error: errorMovies} = useFetch('discover/tv', {
+    include_adult: false,
+    include_video: true,
+    language: "en-US",
+    sort_by: "popularity.desc",
+    page: page,
+  });
+  const {data: trending, loading: loadingTrending, error: errorTrending} = useFetch('discover/tv', {
+    include_adult: false,
+    include_video: true,
+    language: "en-US",
+    page: 1,
+    sort_by: "popularity.desc",
+  });
+  const {data: upcomings, loading: loadingUpcomings,
+    error: errorUpcomings} = useFetch('tv/upcoming');
+    const insets = useSafeAreaInsets();
+    
+  useEffect(() => {
+    if (movies?.length > 0) {
+      setMoviesList(prev => {
+      const fullData = [...prev, ...movies];
+      const filteredData = Array.from(new Map(fullData.map(m => [m.id, m])).values());
+      return filteredData;
+    });
+    }
+  }, [movies]);
+
   return (
-    <SafeAreaProvider 
+    <SafeAreaProvider
         style={{
             paddingTop: insets.top,
             paddingBottom: insets.bottom,
             paddingLeft: insets.left,
             paddingRight: insets.right,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
             flex: 1,}}>
-    
-      {loading ? (
-        <Text>Loading...</Text>
-      ) : error ? (
-        <Text>Error: {error.message}</Text>
-      ) :
 
-      <View style={{ flex: 1, width: '100%' }}>
-      <ScrollView>
-      <Card>
-        <Card.Title title="Movies" />
-        <Card.Content>
-          <Text>Trending</Text>
-        </Card.Content>
-      </Card>
-        <FlatList 
-          data={movies}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <ShowCard movie={item} />
-        }
-        horizontal={true}
-        pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
-        legacyImplementation={false}
-        ItemSeparatorComponent={() => <Divider style={{ marginVertical: 10 }} />}
-        />
-        <Card>
-          <Card.Content>
-            <Text>For you</Text>
-          </Card.Content>
-        </Card>
-        <FlatList 
-          data={movies}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <ShowCard movie={item} />
-        }
-        horizontal={true}
-        pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
-        legacyImplementation={false}
-        ItemSeparatorComponent={() => <Divider style={{ marginVertical: 10 }} />}
-        />
-      <Card>
-        <Card.Content>
-          <Text>Last 24 Hours</Text>  
-        </Card.Content>
-      </Card>
-      <FlatList 
-          data={movies}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <WideCard movie={item} />
-        }
-        pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
-        legacyImplementation={false}
-        ItemSeparatorComponent={() => <Divider style={{ marginVertical: 10 }} />}
-        />
-      
-      </ScrollView>
+      <View style={{ width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'flex-start' }}>
+        <ScrollView >
+          <Text style={{fontSize: 28, fontWeight: '700', margin: 10}}>Movies</Text>
+          {loadingTrending && <Text style={{fontSize: 24, fontWeight: '700'}}>Trending</Text>}
+          <ShowsList shows={trending} loading={loadingTrending} error={errorTrending} Component={ShowCard}/>
+          {loadingUpcomings && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Up Coming</Text>}
+          <ShowsList shows={upcomings} loading={loadingUpcomings} error={errorUpcomings} Component={ShowCard}/>
+          {loadingMovies && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Popular</Text>}
+          <ShowsList shows={moviesList} loading={loadingMovies} error={errorMovies} isHorizontal={false} Component={WideCard} />
+          <TouchableOpacity style={{ height: 100 }} onPress={()=>setPage(prev => prev + 1)} >
+            <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>More</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
-      }
     </SafeAreaProvider>
   );
 

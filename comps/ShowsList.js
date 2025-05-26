@@ -1,5 +1,4 @@
 import { FlatList } from "react-native";
-import ShowCard from "./ShowCard";
 import { Text, Divider, ActivityIndicator } from "react-native-paper";
 
 export default function ShowsList({ shows, loading, error, isHorizontal = true, Component }) {
@@ -24,4 +23,4 @@ export default function ShowsList({ shows, loading, error, isHorizontal = true, 
             />
 
     );
-    }
+}

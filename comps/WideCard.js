@@ -1,10 +1,16 @@
-import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 
 export default function WideCard({ show }) {
+
+    const navigation = useNavigation();
     return(
-        <View style={{ flex: 1, width: '100%' }}>
-            <Card style={styles.Card}>
+        <TouchableOpacity 
+            style={{ flex: 1, width: '100%' }}
+            onPress={() => navigation.navigate('Details', { showId: show.id, type: 'movie' })}>
+            
+            <Card mode='contained' style={styles.Card}>
                 <View style={styles.row}>
                     <Card.Cover
                         source={{ uri: `https://image.tmdb.org/t/p/w500/${show.poster_path}` }} 
@@ -24,7 +30,7 @@ export default function WideCard({ show }) {
                     </View>
                 </View>
             </Card>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -36,6 +42,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         overflow: "hidden",
         justifyContent: 'center',
+        borderWidth: 0.5,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        padding: 4,
     },
     row: {
         flexDirection: 'row',
