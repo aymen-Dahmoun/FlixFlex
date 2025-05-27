@@ -1,11 +1,12 @@
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Card, IconButton, Text } from "react-native-paper";
 
-export default function MovieCard({ show }) {
+export default function MovieCard({ show, type }) {
     const stars = Array.from({ length: Math.round(show.vote_average / 2) });
-
+    const navigation = useNavigation();
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> navigation.navigate('Details', { showId: show.id, type: type })} >
             <Card style={styles.Card} mode='contained'>
                 <Card.Cover
                     source={{ uri: `https://image.tmdb.org/t/p/w500/${show.poster_path}` }}

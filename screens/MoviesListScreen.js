@@ -52,11 +52,11 @@ export default function MoviesListScreen() {
         <ScrollView >
           <Text style={{fontSize: 28, fontWeight: '700', margin: 10}}>Movies</Text>
           {loadingTrending && <Text style={{fontSize: 24, fontWeight: '700'}}>Trending</Text>}
-          <ShowsList shows={trending} loading={loadingTrending} error={errorTrending} Component={ShowCard}/>
+          <ShowsList shows={trending} loading={loadingTrending} error={errorTrending} Component={ShowCard} type={'movie'}/>
           {loadingUpcomings && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Up Coming</Text>}
-          <ShowsList shows={upcomings} loading={loadingUpcomings} error={errorUpcomings} Component={ShowCard}/>
+          <ShowsList shows={upcomings} loading={loadingUpcomings} error={errorUpcomings} Component={ShowCard} type={'movie'}/>
           {loadingMovies && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Popular</Text>}
-          <ShowsList shows={moviesList} loading={loadingMovies} error={errorMovies} isHorizontal={false} Component={WideCard} />
+          <ShowsList shows={moviesList} loading={loadingMovies} error={errorMovies} isHorizontal={false} Component={WideCard} type={'movie'} />
           <TouchableOpacity style={{ height: 100 }} onPress={()=>setPage(prev => prev + 1)} >
             <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>More</Text>
           </TouchableOpacity>
