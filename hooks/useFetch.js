@@ -27,18 +27,20 @@ export default function useFetch(path, params) {
           }
         );
         console.log("Response data: path: ", path);
-        setData(response.data.results);
+        setData(response.data.results? response.data.results : response.data);
       } catch (err) {
         console.error("Fetch error:", err);
         setError(err);
       } finally {
         setLoading(false);
-        console.log("Fetch completed, page: ", params?.page);
+        // console.log("Fetch completed, keys: ", data);
+        console.log(`https://api.themoviedb.org/3/${path}`)
       }
     };
 
     fetchData();
   }, [path, JSON.stringify(params)]);
+
 
   const result = { data, loading, error };
 

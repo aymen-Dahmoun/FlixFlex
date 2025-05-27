@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 
 export default function MainRouter() {
     return (
-      <Stack.Navigator initialRouteName="Movies" >
+      <Stack.Navigator initialRouteName="Movies" screenOptions={{headerShown: false}} >
         <Stack.Screen name="Movies" component={MoviesListScreen} />
         <Stack.Screen name="Series" component={SeriesListScreen} />
         <Stack.Screen name="Favorites" component={MoviesListScreen} />
