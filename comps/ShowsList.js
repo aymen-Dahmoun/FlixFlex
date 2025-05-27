@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import { Text, Divider, ActivityIndicator } from "react-native-paper";
 
 export default function ShowsList({ shows, loading, error, isHorizontal = true, Component, type }) {
@@ -11,6 +11,8 @@ export default function ShowsList({ shows, loading, error, isHorizontal = true, 
     }
     
     return (
+        <View>
+
             <FlatList
                 data={shows}
                 keyExtractor={(item) => item.id.toString()}
@@ -22,5 +24,6 @@ export default function ShowsList({ shows, loading, error, isHorizontal = true, 
                 ItemSeparatorComponent={() => <Divider style={{ marginVertical: 10 }} />}
             />
 
+        </View>
     );
 }

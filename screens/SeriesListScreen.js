@@ -9,17 +9,16 @@ import ShowsList from '../comps/ShowsList';
 
 export default function SeriesListScreen() {
 
-  const [moviesList, setMoviesList] = useState([]);
+  const [seriesList, setSeriessList] = useState([]);
   const [page, setPage] = useState(1);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const {data: movies, loading: loadingMovies, error: errorMovies} = useFetch('discover/tv', {
+  const {data: series, loading: loadingSeries, error: errorSeries} = useFetch('discover/tv', {
     include_adult: false,
     include_video: true,
     language: "en-US",
     sort_by: "popularity.desc",
     page: page,
   });
-  const {data: trending, loading: loadingTrending, error: errorTrending} = useFetch('discover/tv', {
+  const {data: trending, loading: loadingTrending, error: errorTrending} = useFetch('tv/top_rated', {
     include_adult: false,
     include_video: true,
     language: "en-US",
@@ -27,26 +26,22 @@ export default function SeriesListScreen() {
     sort_by: "popularity.desc",
   });
   const {data: upcomings, loading: loadingUpcomings,
-    error: errorUpcomings} = useFetch('tv/upcoming');
-    const insets = useSafeAreaInsets();
+    error: errorUpcomings} = useFetch('tv/on_the_air');
     
   useEffect(() => {
-    if (movies?.length > 0) {
-      setMoviesList(prev => {
-      const fullData = [...prev, ...movies];
+    if (series?.length > 0) {
+      console.log("attributes: ", Object.keys(series[0]));
+      setSeriessList(prev => {
+      const fullData = [...prev, ...series];
       const filteredData = Array.from(new Map(fullData.map(m => [m.id, m])).values());
       return filteredData;
     });
     }
-  }, [movies]);
+  }, [series]);
 
   return (
     <SafeAreaProvider
         style={{
-            paddingTop: insets.top,
-            paddingBottom: insets.bottom,
-            paddingLeft: insets.left,
-            paddingRight: insets.right,
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
@@ -54,13 +49,13 @@ export default function SeriesListScreen() {
 
       <View style={{ width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'flex-start' }}>
         <ScrollView >
-          <Text style={{fontSize: 28, fontWeight: '700', margin: 10}}>Movies</Text>
-          {loadingTrending && <Text style={{fontSize: 24, fontWeight: '700'}}>Trending</Text>}
+          <Text style={{fontSize: 28, fontWeight: '700', margin: 10}}>Series</Text>
+          {!loadingTrending && <Text style={{fontSize: 24, fontWeight: '700'}}>Top Rated</Text>}
           <ShowsList shows={trending} loading={loadingTrending} error={errorTrending} Component={ShowCard}/>
-          {loadingUpcomings && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Up Coming</Text>}
+          {!loadingUpcomings && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>On Air, Next Week</Text>}
           <ShowsList shows={upcomings} loading={loadingUpcomings} error={errorUpcomings} Component={ShowCard}/>
-          {loadingMovies && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Popular</Text>}
-          <ShowsList shows={moviesList} loading={loadingMovies} error={errorMovies} isHorizontal={false} Component={WideCard} />
+          {!loadingSeries && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Popular</Text>}
+          <ShowsList shows={seriesList} loading={loadingSeries} error={errorSeries} isHorizontal={false} Component={WideCard} />
           <TouchableOpacity style={{ height: 100 }} onPress={()=>setPage(prev => prev + 1)} >
             <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>More</Text>
           </TouchableOpacity>

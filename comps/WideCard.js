@@ -1,15 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Card, Text } from "react-native-paper";
+import {IconButton} from "react-native-paper";
 
-export default function WideCard({ show }) {
+export default function WideCard({ show, type }) {
 
     const navigation = useNavigation();
+    const stars = Array.from({ length: Math.round(show.vote_average / 2) });
     return(
         <TouchableOpacity 
             style={{ flex: 1, width: '100%' }}
-            onPress={() => navigation.navigate('Details', { showId: show.id, type: 'movie' })}>
-            
+            onPress={() => navigation.navigate('Details', { showId: show.id, type: type })}>
+
             <Card mode='contained' style={styles.Card}>
                 <View style={styles.row}>
                     <Card.Cover
@@ -18,15 +20,23 @@ export default function WideCard({ show }) {
                     />
                     <View style={styles.info}>
                         <Card.Title
-                            title={show.title}
-                            subtitle={show.release_date}
+                            title={show.original_name ?? show.title}
+                            subtitle={show.release_date ?? show.first_air_date}
                             titleNumberOfLines={1}
                             subtitleNumberOfLines={1}
                             titleStyle={styles.title}
                         />
-                        <Card.Content>
-                            <Text numberOfLines={1} ellipsizeMode="tail">rate: 5</Text>
-                        </Card.Content>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10, marginBottom: 10 }}>
+                            {stars.map((_, i) => (
+                            <IconButton
+                                key={i}
+                                icon="star"
+                                size={15}
+                                iconColor="#FFD700"
+                                style={{ padding: 0, margin: 0, width: 15, height: 15 }}
+                            />
+                    ))}
+                </View>
                     </View>
                 </View>
             </Card>

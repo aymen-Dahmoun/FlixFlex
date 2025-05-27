@@ -73,7 +73,6 @@ export default function DetailsScreen({ navigation, route }) {
           )}
         </Card>
 
-        {/* --- Portal for Modal --- */}
         <Portal>
           <Modal
             visible={isWatching}
