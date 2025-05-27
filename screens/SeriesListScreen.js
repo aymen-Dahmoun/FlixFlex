@@ -48,14 +48,14 @@ export default function SeriesListScreen() {
             flex: 1,}}>
 
       <View style={{ width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'flex-start' }}>
-        <ScrollView >
+        <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} style={{ width: '100%' }}>
           <Text style={{fontSize: 28, fontWeight: '700', margin: 10}}>Series</Text>
           {!loadingTrending && <Text style={{fontSize: 24, fontWeight: '700'}}>Top Rated</Text>}
-          <ShowsList shows={trending} loading={loadingTrending} error={errorTrending} Component={ShowCard}/>
+          <ShowsList shows={trending} loading={loadingTrending} error={errorTrending} Component={ShowCard} type={'tv'}/>
           {!loadingUpcomings && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>On Air, Next Week</Text>}
-          <ShowsList shows={upcomings} loading={loadingUpcomings} error={errorUpcomings} Component={ShowCard}/>
+          <ShowsList shows={upcomings} loading={loadingUpcomings} error={errorUpcomings} Component={ShowCard} type={'tv'} />
           {!loadingSeries && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Popular</Text>}
-          <ShowsList shows={seriesList} loading={loadingSeries} error={errorSeries} isHorizontal={false} Component={WideCard} />
+          <ShowsList shows={seriesList} loading={loadingSeries} error={errorSeries} isHorizontal={false} Component={WideCard} type={'tv'} />
           <TouchableOpacity style={{ height: 100 }} onPress={()=>setPage(prev => prev + 1)} >
             <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>More</Text>
           </TouchableOpacity>

@@ -51,7 +51,7 @@ export default function MoviesListScreen() {
             }}>
 
       <View style={{ width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'flex-start' }}>
-        <ScrollView >
+        <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} style={{ width: '100%' }}>
           <Text style={{fontSize: 28, fontWeight: '700', margin: 10}}>Movies</Text>
           <Divider style={{...styles.divider, width: '100%'}} bold={true} />
           {!loadingTrending && <Text style={{fontSize: 24, fontWeight: '700'}}>Trending</Text>}

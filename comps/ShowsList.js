@@ -9,6 +9,7 @@ export default function ShowsList({ shows, loading, error, isHorizontal = true, 
     if (error) {
         return <Text style={{alignSelf:'center'}}>Error: {error.message}</Text>;
     }
+    console.log("ShowsList: ", type);
     
     return (
         <View>
@@ -20,7 +21,9 @@ export default function ShowsList({ shows, loading, error, isHorizontal = true, 
                 horizontal={isHorizontal}
                 pagingEnabled={true}
                 showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
                 legacyImplementation={false}
+                scrollEnabled={isHorizontal}
                 ItemSeparatorComponent={() => <Divider style={{ marginVertical: 10 }} />}
             />
 

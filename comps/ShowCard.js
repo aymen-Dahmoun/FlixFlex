@@ -5,7 +5,7 @@ import { Card, IconButton, Text } from "react-native-paper";
 export default function MovieCard({ show, type }) {
     const stars = Array.from({ length: Math.round(show.vote_average / 2) });
     const navigation = useNavigation();
-    console.log("MovieCard", Object.keys(show));
+    console.log("MovieCard: ", type);
     return (
         <TouchableOpacity onPress={()=> navigation.navigate('Details', { showId: show.id, type: type })} >
             <Card style={styles.Card} mode='contained'>
