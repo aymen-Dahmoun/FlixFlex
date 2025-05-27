@@ -7,18 +7,20 @@ import TopNavBar from './comps/TopNavBar';
 import BottomNavBar from './comps/BottomNavBar';
 import MainRouter from './MainRouter';
 import { NavigationContainer } from '@react-navigation/native';
+import { AuthProvider } from './context/AuthProvider';
 
 export default function App() {
+  
   return (
-    <NavigationContainer>
-    <SafeAreaProvider style={styles.container}>
-    <SafeAreaView style={{ flex: 1, width: '100%' }}>
-      <TopNavBar />
-        <MainRouter />
-      <BottomNavBar />
-    </SafeAreaView>
-    </SafeAreaProvider>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <SafeAreaProvider style={styles.container}>
+          <SafeAreaView style={{ flex: 1, width: '100%' }}>
+              <MainRouter />
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
 
