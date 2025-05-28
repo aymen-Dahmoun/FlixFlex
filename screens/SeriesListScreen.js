@@ -37,7 +37,6 @@ export default function SeriesListScreen() {
     
   useEffect(() => {
     if (series?.length > 0) {
-      console.log("attributes: ", Object.keys(series[0]));
       setSeriessList(prev => {
       const fullData = [...prev, ...series];
       const filteredData = Array.from(new Map(fullData.map(m => [m.id, m])).values());
@@ -66,7 +65,8 @@ export default function SeriesListScreen() {
           <ShowsList shows={popular} loading={loadingPopular} error={errorPopular} isHorizontal={true} Component={WideCard} type={'tv'} />
           {!loadingSeries && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Discover</Text>}
           <ShowsList shows={seriesList} loading={loadingSeries} error={errorSeries} isHorizontal={false} Component={WideCard} type={'tv'} />
-          <TouchableOpacity style={{ height: 40, width: 150, alignSelf:'center', borderWidth:1, borderColor: 'rgb(255, 115, 0)', borderRadius:40, flex:1, alignItems:'center', justifyContent:'center', margin:10 }} onPress={()=>setPage(prev => prev + 1)} >
+          <TouchableOpacity style={{ height: 40, width: 150, alignSelf:'center', borderWidth:1, borderColor: 'rgb(255, 115, 0)', borderRadius:40, flex:1, alignItems:'center', justifyContent:'center', margin:10 }} 
+            onPress={()=>setPage(prev => prev + 1)} >
             <Text style={{fontSize: 16, fontWeight: '700', margin: 10}}>More</Text>
           </TouchableOpacity>
         </ScrollView>

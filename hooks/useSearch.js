@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import Constants from 'expo-constants';
 const apiKey = Constants.expoConfig?.extra?.TMDB_API_KEY;
 
-console.log(apiKey)
-
 export default function useSearch(query) {
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);

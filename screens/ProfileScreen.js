@@ -10,7 +10,6 @@ export default function UserScreen({navigation}) {
     const handleLogout = async () => {
         try {
             await signOut(firebaseAuth);
-            console.log('Logged out');
             navigation.replace('Login')
         } catch (err) {
             console.error(err);

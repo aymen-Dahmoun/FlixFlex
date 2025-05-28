@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
-import { Card, PaperProvider, Portal, Modal, IconButton, Divider } from 'react-native-paper';
+import { Card, PaperProvider, Portal, Modal, IconButton, Divider, ActivityIndicator } from 'react-native-paper';
 import WebView from 'react-native-webview';
 import useFetch from '../hooks/useFetch';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -23,7 +23,7 @@ export default function DetailsScreen({ navigation, route }) {
   if (loading || loadingVideos || !data || !videos) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Loading...</Text>
+        <ActivityIndicator size={'large'} color='orange'/>
       </View>
     );
   }

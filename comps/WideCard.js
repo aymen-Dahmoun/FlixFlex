@@ -23,7 +23,6 @@ export default function WideCard({ show, type }) {
         setIsIConActive((prevColor) => (prevColor === true ? false : true));
         if (!isIconActive){
             await addFavorite({...show, type: type})
-            console.log('success')
         } else{
             await removeFavorite(show.id)
         }

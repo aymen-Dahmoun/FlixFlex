@@ -81,12 +81,11 @@ export default function MoviesListScreen() {
           <Divider style={styles.divider} bold={false} />
           <ShowsList shows={moviesList} loading={loadingMovies} error={errorMovies} isHorizontal={false} Component={WideCard} type={'movie'}/>
 
-          <TouchableOpacity style={{ height: 40, width: 150, alignSelf:'center', borderWidth:1, borderColor: 'rgb(255, 115, 0)', borderRadius:40, flex:1, alignItems:'center', justifyContent:'center', margin:10 }} onPress={()=>setPage(prev => prev + 1)} >
-                      <Text style={{fontSize: 16, fontWeight: '700', margin: 10}}>More</Text>
-                    </TouchableOpacity>
+          <TouchableOpacity style={{ height: 40, width: 150, alignSelf:'center', borderWidth:1, borderColor: 'rgb(255, 115, 0)', borderRadius:40, flex:1, alignItems:'center', justifyContent:'center', margin:10 }} 
+            onPress={()=>setPage(prev => prev + 1)} >
+            <Text style={{fontSize: 16, fontWeight: '700', margin: 10}}>More</Text>
+           </TouchableOpacity>
         </ScrollView>
-        
-        
       </View>
     </SafeAreaProvider>
   );
