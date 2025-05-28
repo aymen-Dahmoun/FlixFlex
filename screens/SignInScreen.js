@@ -5,15 +5,17 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { firebaseAuth } from '../firebaseClient';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Divider } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
-export default function SignUpScreen({ navigation }) {
+export default function SignUpScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation();
 
   const handleRegister = async () => {
     try {
       await signInWithEmailAndPassword(firebaseAuth, email.trim(), password);
-      navigation.replace('Movies');
+      navigation.navigate('Movies');
     } catch (err) {
       alert(err.message);
     }
@@ -47,7 +49,7 @@ export default function SignUpScreen({ navigation }) {
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.replace('Register')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.linkText}>I don't have an account, register</Text>
         </TouchableOpacity>
       </ScrollView>

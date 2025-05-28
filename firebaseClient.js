@@ -1,9 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Constants from 'expo-constants';
+
+const apiKey = Constants.expoConfig?.extra?.FIREBASE_API_KEY;
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC2LpCqCdgdyFNLGN-t7STHRCUxZmfZOtY",
+  apiKey: apiKey,
   authDomain: "flicsflex.firebaseapp.com",
   projectId: "flicsflex",
   storageBucket: "flicsflex.firebasestorage.app",

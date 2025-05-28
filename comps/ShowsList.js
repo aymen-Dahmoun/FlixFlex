@@ -9,7 +9,6 @@ export default function ShowsList({ shows, loading, error, isHorizontal = true, 
     if (error) {
         return <Text style={{alignSelf:'center'}}>Error: {error.message}</Text>;
     }
-    console.log("ShowsList: ", type);
 
     const dataWithEndSpcae = [...shows, { isSpacer: true }];
 

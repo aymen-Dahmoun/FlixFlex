@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import useSearch from '../hooks/useSearch';
-
-const { width } = Dimensions.get('window');
+import { useNavigation } from '@react-navigation/native';
 
 export default function TopNavBar({ title }) {
   const [searchQuery, setSearchQuery] = useState('');
   const { result, loading, err } = useSearch(searchQuery);
+  const navigation = useNavigation();
   
   const handleSearchChange = (query) => {
     setSearchQuery(query);
@@ -24,9 +24,12 @@ export default function TopNavBar({ title }) {
     setSearchQuery('');
   };
 
-  const resultsComp = (item, idx) => (
+const resultsComp = (item, idx) => {
+  if (item.media_type === 'person') return null;
+  return (
     <TouchableOpacity 
-      key={item.id || idx} 
+      key={item.id || idx}
+      onPress={() => navigation.navigate('Details', { showId: item.id, type: item.media_type }) }
       style={{
         paddingVertical: 12,
         paddingHorizontal: 16,
@@ -82,8 +85,7 @@ export default function TopNavBar({ title }) {
       </View>
     </TouchableOpacity>
   );
-
-  return (
+};  return (
     <View style={{
       flexDirection: 'column',
       backgroundColor: 'rgb(255, 115, 0)',
@@ -111,7 +113,6 @@ export default function TopNavBar({ title }) {
         </View>
       )}
 
-      {/* Search Bar Container */}
       <View style={{
         flexDirection: 'row',
         alignItems: 'center',
