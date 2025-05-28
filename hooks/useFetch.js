@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Constants from 'expo-constants';
+
+const apiKey = Constants.expoConfig?.extra?.TMDB_API_KEY;
 
 export default function useFetch(path, params) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  
+  console.log('key: ',apiKey)
   console.log("useGetMovies initialized");
 
   useEffect(() => {
@@ -16,7 +20,7 @@ export default function useFetch(path, params) {
           `https://api.themoviedb.org/3/${path}`,
           {
             params: {
-              api_key: "a1db14cbe9b1aeaa9a050b489c9c533f",
+              api_key: apiKey,
               // include_adult: false,
               // include_video: true,
               // language: "en-US",

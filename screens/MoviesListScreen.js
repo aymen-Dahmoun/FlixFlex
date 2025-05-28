@@ -14,8 +14,6 @@ export default function MoviesListScreen() {
   const [movieIds, setMovieIds] = useState(new Set());
   const [page, setPage] = useState(1);
   const {data: movies, loading: loadingMovies, error: errorMovies} = useFetch('discover/movie', {
-    include_adult: false,
-    include_video: true,
     language: "en-US",
     sort_by: "popularity.desc",
     page: page,
@@ -58,16 +56,20 @@ export default function MoviesListScreen() {
         <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} style={{ width: '100%' }}>
           <Text style={{fontSize: 28, fontWeight: '700', margin: 10}}>Movies</Text>
           <Divider style={{...styles.divider, width: '100%'}} bold={true} />
+          
           {!loadingTrending && <Text style={{fontSize: 24, fontWeight: '700'}}>Trending</Text>}
           <Divider style={styles.divider} bold={false} />
           <ShowsList shows={trending} loading={loadingTrending} error={errorTrending} Component={ShowCard} type={'movie'}/>
+          
           {!loadingUpcomings && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Up Coming</Text>}
           <Divider style={styles.divider} bold={false} />
           <ShowsList shows={upcomings} loading={loadingUpcomings} error={errorUpcomings} Component={ShowCard} type={'movie'}/>
           <Divider style={styles.divider} bold={false} />
+          
           {!loadingMovies && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Discover</Text>}
           <Divider style={styles.divider} bold={false} />
           <ShowsList shows={moviesList} loading={loadingMovies} error={errorMovies} isHorizontal={false} Component={WideCard} type={'movie'}/>
+          
           <TouchableOpacity style={{ height: 50, width: 180, alignSelf:'center', borderWidth:1, borderBlockColor: 'rgb(255, 115, 0)', borderRadius:40, flex:1, alignItems:'center', justifyContent:'center' }} onPress={()=>setPage(prev => prev + 1)} >
             <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>More</Text>
           </TouchableOpacity>
