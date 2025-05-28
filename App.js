@@ -8,6 +8,7 @@ import BottomNavBar from './comps/BottomNavBar';
 import MainRouter from './MainRouter';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider } from './context/AuthProvider';
+import { PaperProvider } from 'react-native-paper';
 
 export default function App() {
   
@@ -16,7 +17,9 @@ export default function App() {
       <NavigationContainer>
         <SafeAreaProvider style={styles.container}>
           <SafeAreaView style={{ flex: 1, width: '100%' }}>
+            <PaperProvider>
               <MainRouter />
+            </PaperProvider>
           </SafeAreaView>
         </SafeAreaProvider>
       </NavigationContainer>

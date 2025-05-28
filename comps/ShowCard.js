@@ -19,7 +19,7 @@ export default function MovieCard({ show, type }) {
 
     const handleIconPress = async ()=>{
         setIsIConActive((prevColor) => (prevColor === true ? false : true));
-        if (isIconActive === true){
+        if (!isIconActive){
             await addFavorite({...show, type:type})
         } else{
             await removeFavorite(show.id)

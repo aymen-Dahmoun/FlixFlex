@@ -23,7 +23,7 @@ export default function FavoritesScreen() {
         error={false}
         isHorizontal={false}
         Component={WideCard}
-        type="movie" // or pass dynamically if needed
+        type="movie"
       />
     </ScrollView>
   );

@@ -1,17 +1,46 @@
 import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import {IconButton} from "react-native-paper";
+import { addFavorite, isFavorite, removeFavorite } from "../utils/operationsOnLcalStorage";
 
 export default function WideCard({ show, type }) {
 
     const navigation = useNavigation();
     const stars = Array.from({ length: Math.round(show.vote_average / 2) });
+    const [isIconActive, setIsIConActive] = useState(false);
+        
+    useEffect(() => {
+    const fetchFavorites = async () => {
+        const isFave = await isFavorite(show.id);
+        setIsIConActive(isFave? true : false);
+    };
+    fetchFavorites();
+    }, []);
+    
+    const handleIconPress = async ()=>{
+        setIsIConActive((prevColor) => (prevColor === true ? false : true));
+        if (!isIconActive){
+            await addFavorite({...show, type: type})
+            console.log('success')
+        } else{
+            await removeFavorite(show.id)
+        }
+    }
     return(
         <TouchableOpacity 
             style={{ flex: 1, width: '100%' }}
             onPress={() => navigation.navigate('Details', { showId: show.id, type: type })}>
-
+            <View style={{ position: 'absolute', right: 10, top: 10, zIndex: 2 }}>
+                <IconButton
+                icon={isIconActive? 'heart' : 'heart-outline'}
+                size={20}
+                color={'grey'}
+                onPress={handleIconPress}
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.70)', borderRadius: 16 }}
+                />
+            </View>
             <Card mode='contained' style={styles.Card}>
                 <View style={styles.row}>
                     <Card.Cover
