@@ -9,16 +9,11 @@ import ProfileScreen from './screens/ProfileScreen';
 import { useAuth } from './context/AuthProvider';
 import { ActivityIndicator } from 'react-native-paper';
 import { View } from 'react-native';
-import AuthInfoLayerScreen from './screens/AuthInfoLayerScreen';
 import SignUpScreen from './screens/SignUpScreen';
-import TopNavBar from './comps/TopNavBar';
-import BottomNavBar from './comps/BottomNavBar';
 
 const Stack = createStackNavigator();
 import MainLayout from './comps/MainLayout';
 import FavoritesScreen from './screens/FavoritesScreen';
-import SearchScreen from './screens/SearchScreen';
-// ...other imports...
 
 export default function MainRouter() {
   const { user, loading } = useAuth();
@@ -77,19 +72,11 @@ export default function MainRouter() {
               </MainLayout>
             )}
           </Stack.Screen>
-          <Stack.Screen name="Search">
-            {(props) => (
-              <MainLayout>
-                <SearchScreen {...props}/>
-              </MainLayout>
-            )}
-          </Stack.Screen>
         </>
       ) : (
         <>
           <Stack.Screen name="Register" component={SignUpScreen} />
           <Stack.Screen name="Login" component={SignInScreen} />
-          <Stack.Screen name="Info" component={AuthInfoLayerScreen} />
         </>
       )}
     </Stack.Navigator>

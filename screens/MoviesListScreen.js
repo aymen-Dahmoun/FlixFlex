@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import ShowCard from '../comps/ShowCard';
 import WideCard from '../comps/WideCard';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useFetch from '../hooks/useFetch';
 import ShowsList from '../comps/ShowsList';
 import { Divider } from 'react-native-paper';
@@ -11,6 +11,7 @@ import { Divider } from 'react-native-paper';
 export default function MoviesListScreen() {
 
   const [moviesList, setMoviesList] = useState([]);
+  const [movieIds, setMovieIds] = useState(new Set());
   const [page, setPage] = useState(1);
   const {data: movies, loading: loadingMovies, error: errorMovies} = useFetch('discover/movie', {
     include_adult: false,
@@ -28,17 +29,20 @@ export default function MoviesListScreen() {
   });
   const {data: upcomings, loading: loadingUpcomings,
     error: errorUpcomings} = useFetch('movie/upcoming');
-    const insets = useSafeAreaInsets();
     
   useEffect(() => {
-    if (movies?.length > 0) {
-      setMoviesList(prev => {
-      const fullData = [...prev, ...movies];
-      const filteredData = Array.from(new Map(fullData.map(m => [m.id, m])).values());
-      return filteredData;
+  if (movies?.length > 0) {
+    setMoviesList(prev => {
+      const newMovies = movies.filter(m => !movieIds.has(m.id));
+      setMovieIds(prevIds => {
+        const updated = new Set(prevIds);
+        newMovies.forEach(m => updated.add(m.id));
+        return updated;
+      });
+      return [...prev, ...newMovies];
     });
-    }
-  }, [movies]);
+  }
+}, [movies]);
 
   return (
     <SafeAreaProvider
@@ -63,7 +67,7 @@ export default function MoviesListScreen() {
           <Divider style={styles.divider} bold={false} />
           {!loadingMovies && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Discover</Text>}
           <Divider style={styles.divider} bold={false} />
-          <ShowsList shows={moviesList} loading={loadingMovies} error={errorMovies} isHorizontal={false} Component={WideCard} type={'movie'} />
+          <ShowsList shows={moviesList} loading={loadingMovies} error={errorMovies} isHorizontal={false} Component={WideCard} type={'movie'}/>
           <TouchableOpacity style={{ height: 50, width: 180, alignSelf:'center', borderWidth:1, borderBlockColor: 'rgb(255, 115, 0)', borderRadius:40, flex:1, alignItems:'center', justifyContent:'center' }} onPress={()=>setPage(prev => prev + 1)} >
             <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>More</Text>
           </TouchableOpacity>

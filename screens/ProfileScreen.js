@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useAuth } from '../context/AuthProvider'; // Adjust path if needed
 import { signOut } from 'firebase/auth';
 import { firebaseAuth } from '../firebaseClient';

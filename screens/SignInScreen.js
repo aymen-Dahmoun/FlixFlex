@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import {
-  View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView
+import { Text, TextInput, TouchableOpacity, StyleSheet, ScrollView
 } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { firebaseAuth } from '../firebaseClient';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Divider } from 'react-native-paper';
 
 export default function SignUpScreen({ navigation }) {

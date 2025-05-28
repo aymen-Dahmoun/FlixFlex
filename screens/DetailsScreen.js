@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, Image, TouchableHighlight } from 'react-native';
-import { Card, PaperProvider, Portal, Modal, Button, IconButton, Banner, Divider } from 'react-native-paper';
+import { View, Text, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { Card, PaperProvider, Portal, Modal, IconButton, Divider } from 'react-native-paper';
 import WebView from 'react-native-webview';
 import useFetch from '../hooks/useFetch';
 import { ScrollView } from 'react-native-gesture-handler';

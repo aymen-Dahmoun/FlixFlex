@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import ShowCard from '../comps/ShowCard';
 import WideCard from '../comps/WideCard';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useFetch from '../hooks/useFetch';
 import ShowsList from '../comps/ShowsList';
 
@@ -45,6 +45,7 @@ export default function SeriesListScreen() {
             alignItems: 'center',
             justifyContent: 'center',
             width: '100%',
+            backgroundColor:'white',
             flex: 1,}}>
 
       <View style={{ width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'flex-start' }}>
@@ -56,8 +57,8 @@ export default function SeriesListScreen() {
           <ShowsList shows={upcomings} loading={loadingUpcomings} error={errorUpcomings} Component={ShowCard} type={'tv'} />
           {!loadingSeries && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Popular</Text>}
           <ShowsList shows={seriesList} loading={loadingSeries} error={errorSeries} isHorizontal={false} Component={WideCard} type={'tv'} />
-          <TouchableOpacity style={{ height: 100 }} onPress={()=>setPage(prev => prev + 1)} >
-            <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>More</Text>
+          <TouchableOpacity style={{ height: 40, width: 150, alignSelf:'center', borderWidth:1, borderColor: 'rgb(255, 115, 0)', borderRadius:40, flex:1, alignItems:'center', justifyContent:'center', margin:10 }} onPress={()=>setPage(prev => prev + 1)} >
+            <Text style={{fontSize: 16, fontWeight: '700', margin: 10}}>More</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
