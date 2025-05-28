@@ -33,7 +33,7 @@ export default function UserScreen({navigation}) {
             alignSelf:'center', 
             margin:20,
             }}
-            onPress={handleLogout}>
+            onPress={()=> navigation.navigate('Favorite')}>
             <Text style={{
                 fontSize: 20,
                 fontWeight: '700',

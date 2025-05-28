@@ -1,12 +1,30 @@
-import { ScrollView, View } from "react-native";
-import ShowsList from "../comps/ShowsList";
+import { ScrollView } from 'react-native';
+import { useEffect, useState } from 'react';
+import ShowsList from '../comps/ShowsList';
+import { getFavorites } from '../utils/operationsOnLcalStorage';
+import WideCard from '../comps/WideCard';
 
+export default function FavoritesScreen() {
+  const [faves, setFaves] = useState([]);
 
-export default function FavoritesScreen(){
-    
-    return(
-        <ScrollView>
-            <ShowsList />
-        </ScrollView>
-    )
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      const data = await getFavorites();
+      setFaves(data);
+    };
+    fetchFavorites();
+  }, []);
+
+  return (
+    <ScrollView>
+      <ShowsList
+        shows={faves}
+        loading={false}
+        error={false}
+        isHorizontal={false}
+        Component={WideCard}
+        type="movie" // or pass dynamically if needed
+      />
+    </ScrollView>
+  );
 }

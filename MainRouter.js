@@ -16,6 +16,7 @@ import BottomNavBar from './comps/BottomNavBar';
 
 const Stack = createStackNavigator();
 import MainLayout from './comps/MainLayout';
+import FavoritesScreen from './screens/FavoritesScreen';
 // ...other imports...
 
 export default function MainRouter() {
@@ -65,6 +66,13 @@ export default function MainRouter() {
             {(props) => (
               <MainLayout>
                 <ProfileScreen {...props}/>
+              </MainLayout>
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="Favorite">
+            {(props) => (
+              <MainLayout>
+                <FavoritesScreen {...props}/>
               </MainLayout>
             )}
           </Stack.Screen>

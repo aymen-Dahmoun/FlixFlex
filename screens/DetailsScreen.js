@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Dimensions, Image, TouchableHighlight } from 'react-native';
-import { Card, PaperProvider, Portal, Modal, Button, IconButton, Banner } from 'react-native-paper';
+import { Card, PaperProvider, Portal, Modal, Button, IconButton, Banner, Divider } from 'react-native-paper';
 import WebView from 'react-native-webview';
 import useFetch from '../hooks/useFetch';
 import { ScrollView } from 'react-native-gesture-handler';
-import { TouchableHighlightComponent } from 'react-native';
+import ShowsList from '../comps/ShowsList';
+import ShowCard from '../comps/ShowCard';
+
 
 export default function DetailsScreen({ navigation, route }) {
 
@@ -14,6 +16,9 @@ export default function DetailsScreen({ navigation, route }) {
   const [imageVisible, setImageVisible] = useState(false);
 
   const { data, loading, error } = useFetch(`${type}/${showId}`);
+  const {data:SimilarShows, loading: SimilarShowsLoading, error: SimilarShowsErr} 
+        = useFetch(`${type}/${showId}/similar`)
+  
   const { data: videos, loading: loadingVideos, error: errorVideos } = useFetch(`${type}/${showId}/videos`);
   if (loading || loadingVideos || !data || !videos) {
     return (
@@ -29,8 +34,6 @@ export default function DetailsScreen({ navigation, route }) {
       video.official === true &&
       video.site === 'YouTube'
   );
-
-  console.log("DetailsScreen: ",data.production_companies);
 
   return (
     <PaperProvider>
@@ -219,6 +222,14 @@ export default function DetailsScreen({ navigation, route }) {
             />
           </Modal>
         </Portal>
+      {!SimilarShowsLoading && <Text style={{fontSize: 24, fontWeight: '700', margin: 10}}>Similar</Text>}
+          <Divider 
+            style={{
+              width: '90%',
+              backgroundColor:'rgb(255, 123, 0)',
+              alignSelf: 'center',}}
+            bold={false} />
+          <ShowsList shows={SimilarShows} loading={SimilarShowsLoading} error={SimilarShowsErr} isHorizontal={true} Component={ShowCard} type={type} />
       </ScrollView>
       {imageVisible && (
         <Portal>
@@ -243,6 +254,7 @@ export default function DetailsScreen({ navigation, route }) {
           </Modal>
         </Portal>
       )}
+
     </PaperProvider>
 
   );
